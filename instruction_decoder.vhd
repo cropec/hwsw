@@ -23,9 +23,9 @@ end entity intruction_decoder;
 
 architecture instr_dec_behavior of intruction_decoder is
 
-signal cycle_count : natural range 1 to 3:= 1;
-signal cycle_reset : std_logic := '0';	  
-signal cycle_enable: std_logic := '0'; 
+--signal cycle_count : natural range 1 to 3:= 1;
+--signal cycle_reset : std_logic := '0';	  
+--signal cycle_enable: std_logic := '0'; 
 
 constant NOP_OPCODE : std_logic_vector(3 downto 0) := "0000";
 constant ALU_OPCODE : std_logic_vector(3 downto 0) := "0001";

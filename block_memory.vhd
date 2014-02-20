@@ -23,7 +23,7 @@ end entity block_memory;
 architecture behavior_mem of block_memory is
 
 subtype word_t is std_logic_vector(DATA_WIDTH-1 downto 0);
-type memory_t is array(CAPACITY downto 0) of word_t; 
+type memory_t is array(CAPACITY-1 downto 0) of word_t; 
 
 signal memory : memory_t;							 
 signal data_output : word_t;
@@ -39,7 +39,7 @@ begin
 					memory(i) <= (others=>'0');
 				end loop;  
 		    elsif write_en = '1' then
-				memory(to_integer(unsigned(('0'&write_addr)))) <= write_data;
+				memory(to_integer(unsigned(write_addr))) <= write_data;
 			end if;
 		end if;
 	end process WRITE_PROC;

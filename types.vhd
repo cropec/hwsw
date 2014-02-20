@@ -23,7 +23,7 @@ package interfaces is
 		wa_src		: std_logic;    --write address source
 		wr_en	 	: std_logic;	--write register enable
 		wcr_en		: std_logic;	--write condition register enable
-		rd_en		: std_logic;	--read register enable
+		--rd_en		: std_logic;	--read register enable
 		alu_op_src	: std_logic;	--alu operation/2nd operand source
 		wb_src		: std_logic;	--write back data source
 		dm_wr		: std_logic;	--data memory write enable
@@ -54,7 +54,7 @@ package interfaces is
 		rd_data_1	: std_logic_vector(31 downto 0);
 		rd_data_2	: std_logic_vector(31 downto 0);
 		wr_data		: std_logic_vector(31 downto 0);
-		rd_en		: std_logic;
+		--rd_en		: std_logic;
 		wr_en 		: std_logic;
 	end record reg_file_if_t; 
 	
@@ -136,17 +136,17 @@ package interfaces is
 	--------------------------------------------------------------------------
 	-- pipeline_mem_t:-the inteface to the pipeline register that holds the --
 	-- 				   information needed during the memory stage			-- 
-	--				 -80 bits	(79 downto 0)								--
+	--				 -80 bits	(79 downto 0)								-- //after changes 48 bits
 	--------------------------------------------------------------------------
 	
 	type pipeline_mem_t is record		
 		wr_en			: std_logic; --79
 		wcr_en			: std_logic; --78
 		wb_src			: std_logic; --77
-		dm_wr			: std_logic; --76
-		dm_rd			: std_logic; --75
+		--dm_wr			: std_logic; --76
+		--dm_rd			: std_logic; --75
 		alu_result		: std_logic_vector(31 downto 0);--74 dwonto 43
-		data_to_mem		: std_logic_vector(31 downto 0);--42 downto 11
+		--data_to_mem		: std_logic_vector(31 downto 0);--42 downto 11
 		wb_addr			: std_logic_vector(4 downto 0);	--10 downto 6
 		wcr_addr		: std_logic_vector(5 downto 0);	--5 downto 0
 	end record pipeline_mem_t; 

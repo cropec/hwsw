@@ -9,32 +9,39 @@ end entity;
 
 architecture test_behavios of testbench is 
 
-constant NO_OF_INSTR : natural := 7;
+constant NO_OF_INSTR : natural := 11;
 type instr_mem_type is array (0 to NO_OF_INSTR-1) of std_logic_vector(31 downto 0);
 signal intruction_memory_content : instr_mem_type := (
-"00001110000000001000000000011000", --IADD r1 = r0 +0x18
-"00001110000000010000000000000111",	--IADD r2 = r0 +0x07
-"00000010001000001000110000000000",	--ADD  r3 = r1 + r2
-"00000110000000011000000000000001", --ST   r0[1] = r3
-"00000100000000100000000000000001",	--LD   r4 = r0[1] 
-"00001010001100100000001000001010",	--CMP  r3 = r4? c1=1 c2=0 
-"00001010001100010000001000011100"	--CMP  r3 = r4? c1=1 c2=0
+"00000110000000001000000000000111", --IADD r1 = r0 +0x07
+"00000110000000010000000000000111",	--IADD r2 = r0 +0x07
+--"00000010001000001000110000000000",	--ADD  r3 = r1 + r2		   --ADD need shifting ALU_OP one bit right
+"00000110000000011000000000010000", --IADD r3 = r0 +0x10
+"00000110000000100000000000001010",	--IADD r4 = r0 +0x0A
+"00001010000000011000000000000001", --ST   r0[1] = r3
+"00000100000100010010011100000000",	--CMP  r1 = r2? c2=1 c3=0
+"00000010000100010001010000000000", --ADD r5 = r1 +r2
+"00000000000000000000000000000000",
+"00001000000000110000000000000001",	--LD   r6 = r0[1] 
+"00000000000000000000000000000000",
+"00001100000000000000000000000010"	--JMP #2 IF c1
+--"00000000000000000000000000000000"
 ); 
 
-signal intruction_memory_content2 : instr_mem_type := (
-"00000110000000001000000000001010", --IADD r1 = r0 +0x0A
-"00000110000000010000000000000011",	--IADD r2 = r0 +0x01
-"00000000000000000000000000000000", --ST   r3[0] = r3
-"00000000000000000000000000000000",	--ADD  r3 = r3 + r2
-"00000000000100011000001011001010",	--CMP  r1 > r3? c1=1 c2=0 
-"00000000000000000000000000000010",	--JMP  #2 IF c1	  
-"00000000000000000000000000000000"
-);
+--signal intruction_memory_content2 : instr_mem_type := (
+--"00000110000000001000000000001010", IADD r1 = r0 +0x0A
+--"00000110000000010000000000000011",	IADD r2 = r0 +0x01
+--"00000000000000000000000000000000", ST   r3[0] = r3
+--"00000000000000000000000000000000",	ADD  r3 = r3 + r2
+--"00000000000100011000001011001010",	CMP  r1 > r3? c1=1 c2=0 
+--"00000000000000000000000000000010",	JMP  #2 IF c1	  
+--"00000000000000000000000000000000",
+--"00000000000000000000000000000000"
+--);
 
 signal clock : std_logic := '0';
 signal clk, reset: std_logic := '0' ;
 signal exeu_en : std_logic := '0';
-
+					 
 signal imem_wr_en  : std_logic := '0';	  
 signal imem_wr_addr: std_logic_vector(11 downto 0);	
 signal imem_wr_data: std_logic_vector(31 downto 0);		  
@@ -161,7 +168,7 @@ begin
 		imem_wr_en <= '1';
 		for i in 0 to NO_OF_INSTR-1	loop
 			imem_wr_addr <= conv_std_logic_vector(i,12);
-		    imem_wr_data <= intruction_memory_content2(i);
+		    imem_wr_data <= intruction_memory_content(i);
 			wait for 100 ns;  
 		end loop;
 		imem_wr_en<='0';
